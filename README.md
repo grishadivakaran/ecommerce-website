@@ -5,7 +5,8 @@ A responsive e-commerce website built with React + Vite.
 ## Screenshots
 
 ### Home
-![Home](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Home.png)
+<img width="1817" height="837" alt="Home" src="https://github.com/user-attachments/assets/031783f2-7c40-4813-be7c-0b479f65fcbd" />
+
 
 ### Navbar
 ![Navbar](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Navbar.png)
