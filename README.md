@@ -9,17 +9,23 @@ A responsive e-commerce website built with React + Vite.
 
 
 ### Navbar
-![Navbar](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Navbar.png)
+<img width="1900" height="105" alt="Navbar" src="https://github.com/user-attachments/assets/d1249d59-235d-4cdd-9222-242e8bf425df" />
+
 
 ### Categories
-![Categories](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Categories.png)
+<img width="1877" height="892" alt="Categories" src="https://github.com/user-attachments/assets/3911468f-4dda-4cb5-879d-562aebb64562" />
+
+
 
 ### Products
-![Products1](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Products1.png)
-![Products2](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Products2.png)
+<img width="1871" height="883" alt="Products1" src="https://github.com/user-attachments/assets/594be7df-d08b-4426-b326-d256c0b43221" />
+<img width="1851" height="870" alt="Products2" src="https://github.com/user-attachments/assets/81527e70-182d-40f0-95f0-5de1d50d342e" />
+
+
 
 ### Testimonials
-![Testimonials](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Testimonials.png)
+<img width="1857" height="880" alt="Testimonials" src="https://github.com/user-attachments/assets/e78d9830-31c9-49ec-b06b-3623ee955025" />
+
 
 ### Footer
-![Footer](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Footer.png)
+<img width="1876" height="850" alt="Footer" src="https://github.com/user-attachments/assets/1d96ff1f-a63d-4f9e-ae56-7263f3d488f3" />
