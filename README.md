@@ -5,20 +5,20 @@ A responsive e-commerce website built with React + Vite.
 ## Screenshots
 
 ### Home
-![Home](ss/Home.png)
+![Home](./ss/Home.png)
 
 ### Navbar
-![Navbar](ss/Navbar.png)
+![Navbar](./ss/Navbar.png)
 
 ### Categories
-![Categories](ss/Categories.png)
+![Categories](./ss/Categories.png)
 
 ### Products
-![Products](ss/Products1.png)
-![Products](ss/Products2.png)
+![Products](./ss/Products1.png)
+![Products](./ss/Products2.png)
 
 ### Testimonials
-![Testimonials](ss/Testimonials.png)
+![Testimonials](./ss/Testimonials.png)
 
 ### Footer
-![Footer](ss/Footer.png)
+![Footer](./ss/Footer.png)
