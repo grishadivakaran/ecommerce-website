@@ -5,20 +5,20 @@ A responsive e-commerce website built with React + Vite.
 ## Screenshots
 
 ### Home
-![Home](./ss/Home.png)
+![Home](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Home.png)
 
 ### Navbar
-![Navbar](./ss/Navbar.png)
+![Navbar](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Navbar.png)
 
 ### Categories
-![Categories](./ss/Categories.png)
+![Categories](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Categories.png)
 
 ### Products
-![Products](./ss/Products1.png)
-![Products](./ss/Products2.png)
+![Products1](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Products1.png)
+![Products2](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Products2.png)
 
 ### Testimonials
-![Testimonials](./ss/Testimonials.png)
+![Testimonials](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Testimonials.png)
 
 ### Footer
-![Footer](./ss/Footer.png)
+![Footer](https://raw.githubusercontent.com/grishadivakaran/ecommerce-website/main/ss/Footer.png)
