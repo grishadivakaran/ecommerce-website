@@ -1,30 +1,99 @@
+import { useEffect, useState } from "react";
+import { supabase } from "../supabase";
+import { Link } from "react-router-dom";
+
+const defaultForm = {
+  title: "",
+  description: "",
+  price: "",
+  category: "",
+};
+
+const fallbackImage =
+  "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000";
+
 export default function Products() {
-  const products = [
-    {
-      name: "MacBook Pro M4",
-      price: "₹1,49,999",
-      image:
-        "https://www.androidauthority.com/wp-content/uploads/2023/02/Apple-MacBook-Pro-2023-sitting-on-desk-with-AA-site-on-screen-scaled.jpg"
-    },
-    {
-      name: "iPhone 17 Pro",
-      price: "₹89,999",
-      image:
-        "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=1000",
-    },
-    {
-      name: "Sony XM5",
-      price: "₹24,999",
-      image:
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1000",
-    },
-    {
-      name: "Gaming Keyboard",
-      price: "₹5,999",
-      image:
-        "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=1000",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [form, setForm] = useState(defaultForm);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const formatPrice = (value) =>
+    new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(Number(value || 0));
+
+  const fetchProducts = async () => {
+    setMessage("");
+
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      setMessage(error.message);
+      return;
+    }
+
+    setProducts(data || []);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!form.title || !form.description || form.price === "") {
+      setMessage("Please fill in title, description, and price.");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+
+    const { error } = await supabase.from("products").insert([
+      {
+        name: form.title.trim(),
+        description: form.description.trim(),
+        price: Number(form.price),
+        category: form.category.trim() || "General",
+        rating: 4.5,
+        stock: 10,
+        image_url: fallbackImage,
+      },
+    ]);
+
+    if (error) {
+      console.error(error);
+      setMessage(error.message);
+    } else {
+      setForm(defaultForm);
+      await fetchProducts();
+      setMessage("Product added successfully.");
+    }
+
+    setLoading(false);
+  };
+
+  const featuredProduct = products[0] || {
+    id: 0,
+    name: "MacBook Pro M4",
+    description:
+      "Experience next-generation performance with Apple's most powerful laptop.",
+    price: 149999,
+    image_url: fallbackImage,
+  };
 
   return (
     <>
@@ -39,7 +108,66 @@ export default function Products() {
           text-align:center;
           font-size:3rem;
           margin-bottom:60px;
-          color:#e2e8f0;x
+          color:#e2e8f0;
+        }
+
+        .add-product-form{
+          background:rgba(255,255,255,.08);
+          backdrop-filter:blur(15px);
+          border:1px solid rgba(255,255,255,.15);
+          border-radius:20px;
+          padding:24px;
+          margin:0 auto 60px;
+          max-width:800px;
+        }
+
+        .add-product-form h3{
+          margin-bottom:18px;
+          color:#e2e8f0;
+        }
+
+        .form-grid{
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:16px;
+        }
+
+        .form-grid input,
+        .form-grid textarea{
+          width:100%;
+          padding:14px;
+          border-radius:12px;
+          border:1px solid rgba(148, 163, 184, 0.35);
+          background:#0f172a;
+          color:#e2e8f0;
+          outline:none;
+        }
+
+        .form-grid textarea{
+          min-height:130px;
+          resize:vertical;
+          grid-column:span 2;
+        }
+
+        .form-grid button{
+          grid-column:span 2;
+          padding:14px;
+          border:none;
+          border-radius:12px;
+          background:linear-gradient(135deg, #7c3aed, #2563eb);
+          color:white;
+          cursor:pointer;
+          font-weight:600;
+        }
+
+        .form-grid button:disabled{
+          opacity:.65;
+          cursor:not-allowed;
+        }
+
+        .form-message{
+          margin-top:12px;
+          color:#bfdbfe;
         }
 
         .featured-product{
@@ -47,12 +175,9 @@ export default function Products() {
           gap:40px;
           align-items:center;
           margin-bottom:80px;
-
           background:rgba(255,255,255,.08);
           backdrop-filter:blur(15px);
-
           border:1px solid rgba(255,255,255,.15);
-
           border-radius:30px;
           padding:30px;
         }
@@ -76,21 +201,14 @@ export default function Products() {
           padding:12px 25px;
           border:none;
           border-radius:12px;
-          background:linear-gradient(
-            135deg,
-            #7c3aed,
-            #2563eb
-          );
+          background:linear-gradient(135deg, #7c3aed, #2563eb);
           color:white;
           cursor:pointer;
         }
 
         .product-grid{
           display:grid;
-          grid-template-columns:repeat(
-            auto-fit,
-            minmax(250px,1fr)
-          );
+          grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
           gap:25px;
         }
 
@@ -122,6 +240,13 @@ export default function Products() {
           margin-bottom:10px;
         }
 
+        .description{
+          color:#cbd5e1;
+          font-size:0.95rem;
+          margin-bottom:10px;
+          min-height:48px;
+        }
+
         .price{
           color:#60a5fa;
           font-weight:bold;
@@ -133,11 +258,7 @@ export default function Products() {
           padding:12px;
           border:none;
           border-radius:10px;
-          background:linear-gradient(
-            135deg,
-            #7c3aed,
-            #2563eb
-          );
+          background:linear-gradient(135deg, #7c3aed, #2563eb);
           color:white;
           cursor:pointer;
         }
@@ -150,51 +271,100 @@ export default function Products() {
           .featured-product img{
             width:100%;
           }
+
+          .form-grid{
+            grid-template-columns:1fr;
+          }
+
+          .form-grid textarea,
+          .form-grid button{
+            grid-column:span 1;
+          }
         }
       `}</style>
 
       <section className="products">
         <h2>Featured Collection</h2>
 
+        <form className="add-product-form" onSubmit={handleSubmit}>
+          <h3>Add New Product</h3>
+
+          <div className="form-grid">
+            <input
+              type="text"
+              name="title"
+              placeholder="Product name"
+              value={form.title}
+              onChange={handleChange}
+            />
+
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={form.price}
+              onChange={handleChange}
+            />
+
+            <input
+              type="text"
+              name="category"
+              placeholder="Category"
+              value={form.category}
+              onChange={handleChange}
+            />
+
+            <textarea
+              name="description"
+              placeholder="Description"
+              value={form.description}
+              onChange={handleChange}
+            />
+
+            <button type="submit" disabled={loading}>
+              {loading ? "Saving..." : "Add Product"}
+            </button>
+          </div>
+
+          {message && (
+            <div className="form-message">
+              <p>{message}</p>
+            </div>
+          )}
+        </form>
+
         <div className="featured-product">
           <img
-            src="https://www.androidauthority.com/wp-content/uploads/2023/02/Apple-MacBook-Pro-2023-sitting-on-desk-with-AA-site-on-screen-scaled.jpg"
-            alt="..."
+            src={featuredProduct.image_url || fallbackImage}
+            alt={featuredProduct.name}
           />
 
           <div className="featured-content">
-            <h3>MacBook Pro M4</h3>
-
-            <p>
-              Experience next-generation performance with
-              Apple's most powerful laptop.
-            </p>
-
+            <h3>{featuredProduct.name}</h3>
+            <p>{featuredProduct.description}</p>
             <h2 style={{ color: "#60a5fa" }}>
-              ₹1,49,999
+              {formatPrice(featuredProduct.price)}
             </h2>
 
-            <button className="featured-btn">
-              Shop Now
-            </button>
+            <Link to={`/product/${featuredProduct.id}`}>
+              <button className="featured-btn">View Product</button>
+            </Link>
           </div>
         </div>
 
         <div className="product-grid">
-          {products.slice(1).map((item, index) => (
-            <div className="product-card" key={index}>
-              <img src={item.image} alt={item.name} />
+          {products.map((item) => (
+            <div className="product-card" key={item.id}>
+              <img src={item.image_url || fallbackImage} alt={item.name} />
 
               <div className="product-info">
                 <h3>{item.name}</h3>
+                <p className="description">{item.description}</p>
+                <p className="price">{formatPrice(item.price)}</p>
 
-                <p className="price">
-                  {item.price}
-                </p>
-
-                <button className="buy-btn">
-                  View Product
-                </button>
+                <Link to={`/product/${item.id}`}>
+                  <button className="buy-btn">View Product</button>
+                </Link>
               </div>
             </div>
           ))}
